@@ -1,0 +1,43 @@
+# 忽略macOS操作系统自动生成的数据文件，防止其被部署到生产环境，给黑客入侵的机会
+.DS_Store
+
+# 忽略本项目依赖的所有nodejs第三方库文件夹
+node_modules/
+
+# 忽略本项目的构建产物文件夹
+dist/
+
+# 忽略代码覆盖率报告文件夹
+coverage/
+tests/**/coverage/
+
+# 忽略包管理器的日志文件
+# /logs
+# *.log*
+# 忽略以 npm-debug.log 开头的任意文件及其后缀。该规则被用于排除由 npm 调试生成的日志文件。
+npm-debug.log*
+# 忽略以 yarn-debug.log 开头的任意文件及其后缀。该规则被用于排除由 Yarn 调试生成的日志文件。
+yarn-debug.log*
+# 忽略以 yarn-error.log 开头的任意文件及其后缀。该规则被用于排除由 Yarn 错误日志生成的日志文件。
+yarn-error.log*
+
+# "package-lock.json" 是一个由 npm 生成和维护的文件，在 Node.js 项目中存储了项目的依赖项及其确切的版本号信息。由于这个文件是由 npm 自动生成的，并且可以通过运行 "npm install" 命令重新生成，因此通常情况下不需要将其包含在版本控制中。
+package-lock.json
+
+
+# 忽略编辑器生成的文件
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# 忽略开发环境配置文件
+# /.env.local
+# /.env.development.local
+# /.env.test.local
+# /.env.prod.local
+
+# 忽略缓存文件
+# *.tmp

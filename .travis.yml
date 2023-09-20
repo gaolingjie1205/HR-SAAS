@@ -1,0 +1,11 @@
+# 指定构建环境的编程语言为node.js
+language: node_js
+# 指定所需的node.js版本为10
+node_js: 10
+# 指定构建脚本为运行npm中的test命令，通常用于运行项目的单元测试
+script: npm run test
+# 禁用邮件通知，当构建状态发生改变时不会通过邮件进行通知。
+notifications:
+  email: false
+
+# 整个配置文件的作用是在每次提交代码到仓库时，自动运行Vue项目中的单元测试，并在构建完成后不发送邮件通知。

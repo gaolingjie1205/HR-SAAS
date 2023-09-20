@@ -1,0 +1,69 @@
+# http://editorconfig.org
+# root是应在文件顶部的任何部分之外指定的特殊属性。指示这是顶层的 EditorConfig 文件，不会继续查找其他父级目录的.editorconfig文件。设置为true来停止查找
+root = true
+
+# 匹配任意类型的文件
+[*]
+# 设置字符集为 UTF-8
+charset = utf-8
+# 使用空格进行缩进
+indent_style = space
+# 使用制表符进行缩进
+# indent_style = tab
+# 每个缩进级别为 2 个空格
+indent_size = 2
+# 设置行尾为 Unix 风格的换行符
+end_of_line = lf
+# 在每个文件的末尾插入一个空行
+insert_final_newline = true
+# 指示编辑器在保存文件时自动删除行的末尾多余的空白字符，例如空格或制表符。这样可以帮助保持代码的整洁性
+trim_trailing_whitespace = true
+
+# 仅适用于扩展名为 .md 的文件
+[*.md]
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+# 匹配 lib 目录下的所有子目录中的 .js 文件
+# [lib/**.js]
+
+; 9898
+
+# 当打开一个文件时，EditorConfig插件会在打开的文件的目录和每个父目录中查找一个名为 .edititorConfig 的文件。如果到达根文件路径或找到了 root=true 的EditorConfig文件，则搜索 .edititorConfig 文件的过程将停止。
+
+# EditorConfig 文件是按照从上到下的顺序进行读取的，并且最近被找到的规则具有优先权。匹配的 EditorConfig 部分中的属性会按照读取的顺序应用，因此较近的文件中的属性具有优先权。
+
+# EditorConfig 文件使用与 Python ConfigParser Library 相兼容的 INI 格式，但允许在部分名称中使用方括号 [ 和 ]。部分名称是文件路径的通配符（区分大小写），类似于 gitignore 所接受的格式。只使用正斜杠（/，而不是反斜杠）作为路径分隔符，井号（＃）或分号（;）用作注释。注释应该单独占一行。EditorConfig 文件应该是 UTF-8 编码，行分隔符可以是 CRLF 或 LF。EditorConfig 文件按顺序从上到下读取，最新的规则优先。
+
+
+# <通配符模式>
+# 以下是文件路径通配符模式和当前支持的 EditorConfig 属性的解释。
+# 在通配符匹配的节名称中识别的特殊字符：
+#
+# *             匹配除路径分隔符（/）以外的任何字符串
+# **            匹配任何字符串
+# ?             匹配任何单个字符
+# [name]        匹配name中的任何单个字符
+# [!name]       匹配非name中的任何单个字符
+# {s1,s2,s3}    匹配给出的任何字符串（用逗号分隔）（EditorConfig Core 0.11.0 及以上版本可用）
+# {num1..num2}  匹配num1和num2之间的任何整数，其中num1和num2可以是正的，也可以是负的
+#
+# 特殊字符可以使用反斜杠进行转义，这样它们就不会被解释为通配符模式。
+
+
+# <支持的属性>
+# 请注意，并不是每个插件都支持所有的属性。这个wiki有一个完整的属性列表。
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+#
+# indent_style      缩进风格，设置为 tab 或 space ，以分别使用硬标签或软标签。
+# indent_size       缩进尺寸，一个整数，定义每个缩进级别和软 tab (如果支持)将会使用的列数。当设置为 tab 时，将使用tab_width的值（如果指定）。
+# tab_width         定义用于表示tab字符的列数的整数。这个默认值为indent_size，通常不需要指定。
+# end_of_line       设置为lf、cr或crlf，以控制换行符的表示方式。
+# charset           设置为 latin1, utf-8, utf-8-bom, utf-16be 或者 utf-16le 来控制字符集。
+# trim_trailing_whitespace    设置为 true 以删除换行符前面的任何空白字符
+# insert_final_newline        在每个文件的末尾插入一个空行
+# root              root是应在文件顶部的任何部分之外指定的特殊属性。指示这是顶层的 EditorConfig 文件，不会继续查找其他父级目录的.editorconfig文件。设置为true来停止查找
+#
+# 目前，所有的属性和值都不区分大小写。解析时它们都是小写的。一般来说，如果没有指定一个属性，则将使用编辑器设置，EditorConfig 对该部分没有影响。
+# 对于任何属性，unset的值是删除该属性的影响，即使它之前已经设置过。例如，添加 indent_size = unset 以取消定义indent_size属性（并使用默认代码编辑器的设置）。
+# 通常首选保留某些 EditorConfig 属性为未指定状态，即不指定某些编辑设置，从而可以采用编辑器的特定设置。例如，不需要指定tab_width，除非它与indent_size的值不同。另外，当indent_style设置为tab时，可能需要保留indent_size为空，以便读者可以使用他们首选的缩进宽度来查看文件。此外，如果项目中的属性没有标准化（例如end_of_line），最好将其留空。
