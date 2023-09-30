@@ -35,7 +35,15 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: { // 登录接口地址  ihrm.itheima.net/api/sys/login
+      // http://localhost:9528/api 本身就是一个后端服务的地址，接下来只要告诉Vue CLI要代理哪个目标服务器的URL即可
+      '/api': {
+        target: 'http://ihrm.itheima.net/',
+        changeOrigin: true
+      }
     }
+
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

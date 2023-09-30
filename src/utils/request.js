@@ -1,4 +1,46 @@
 import axios from 'axios'
+import { Message } from 'element-ui'
+
+const request = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API,
+  timeout: 5000
+})
+request.interceptors.request.use(function(config) {
+  // 请求拦截器，需要添加vuex容器里面的token
+  return config
+}, function(error) {
+  console.log(error)
+  return Promise.reject(error)
+})
+request.interceptors.response.use(function(value) {
+  console.log('axios响应拦截器获得原始数据如下：')
+  console.log(value)
+  // 响应拦截器
+  const { success, message, data } = value.data // 这样解构以后，API接口就无需判断是否请求成功了，await往下走必定是真实的接口给的obj.data数据，有问题就会出现在API接口的catch代码块内
+  if (success) {
+    Message({
+      showClose: true,
+      message: message,
+      type: 'success'
+    })
+    return Promise.resolve(data)
+  } else {
+    Message.error(message)
+    return Promise.reject(new Error(message)) // 返回一个被拒绝的Promise，中止Promise链的执行
+  }
+}, function(error) {
+  console.log(error)
+  Message({
+    showClose: true,
+    message: error.message,
+    type: 'error'
+  })
+  return Promise.reject(error)
+})
+export default request
+
+/*
+import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
@@ -32,16 +74,12 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  /**
-   * If you want to get http information such as headers or status
-   * Please return  response => response
-  */
+  // If you want to get http information such as headers or status
+  // Please return  response => response
+  // Determine the request status by custom code
+  // Here is just an example
+  // You can also judge the status by HTTP Status Code
 
-  /**
-   * Determine the request status by custom code
-   * Here is just an example
-   * You can also judge the status by HTTP Status Code
-   */
   response => {
     const res = response.data
 
@@ -83,3 +121,4 @@ service.interceptors.response.use(
 )
 
 export default service
+*/

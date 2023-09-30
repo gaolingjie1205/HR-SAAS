@@ -16,8 +16,11 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import '@/icons' // icon
-import '@/permission' // permission control
+// 引入SVG图标组件
+import '@/icons'
+
+// 引入Vue导航守卫，做权限控制
+import '@/permission'
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })

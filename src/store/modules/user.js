@@ -98,9 +98,41 @@ export default {
   actions
 }
 */
+import { getToken, setToken as settToken, removeToken as removeeToken } from '@/utils/auth'
+import { login } from '@/api/user'
+
+// 初始化user子模块时，从前端缓存读取cookie数据，放入vuex容器的token状态
+const state = {
+  token: getToken()
+}
+const mutations = {
+  // 提交mutation时，要确保vuex容器与前端缓存的数据一致
+  setToken(state, payload) {
+    state.token = payload
+    settToken(payload)
+  },
+  removeToken(state) {
+    state.token = null
+    removeeToken()
+  }
+}
+const actions = {
+  async loginUser(context, payload) {
+    try {
+      const result = await login(payload)
+      console.log('@/store/modules/user.js 已经成功提交了登录请求')
+      console.log(result)
+      context.commit('setToken', result)
+    } catch (e) {
+      console.log('@/store/modules/user.js 在提交登录请求时发生了错误')
+      console.log(e)
+    }
+  }
+}
+
 export default {
   namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {}
+  state,
+  mutations,
+  actions
 }

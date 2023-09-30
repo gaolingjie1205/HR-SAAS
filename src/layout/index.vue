@@ -37,8 +37,10 @@ export default {
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
+        // 如果sidebar已经展开，则openSidebar为true，hideSidebar为false，JS判断sidebar状态的依据
         openSidebar: this.sidebar.opened,
         withoutAnimation: this.sidebar.withoutAnimation,
+        // 根据vuex里面的device判断当前设备是移动端，还是桌面端
         mobile: this.device === 'mobile'
       }
     }

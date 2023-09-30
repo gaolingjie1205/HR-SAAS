@@ -3,6 +3,7 @@ import Cookies from 'js-cookie'
 
 const state = {
   sidebar: {
+    // 'sidebarStatus'cookie存0或者1，首次打开项目时，没有此cookie，默认令sidebar展开，之后用户切换此sidebar的状态时，记录到cookie里面，算是保存用户自定义设置
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
