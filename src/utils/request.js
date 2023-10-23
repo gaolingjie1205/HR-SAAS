@@ -1,5 +1,10 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
+import store from '@/store'
+import router from '@/router'
+import { getTimestamp } from '@/utils/auth'
+
+const timeout = 1 * 60 * 60 * 1000 // token过期时间
 
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_API,
@@ -7,27 +12,18 @@ const request = axios.create({
 })
 request.interceptors.request.use(function(config) {
   // 请求拦截器，需要添加vuex容器里面的token
-  return config
-}, function(error) {
-  console.log(error)
-  return Promise.reject(error)
-})
-request.interceptors.response.use(function(value) {
-  console.log('axios响应拦截器获得原始数据如下：')
-  console.log(value)
-  // 响应拦截器
-  const { success, message, data } = value.data // 这样解构以后，API接口就无需判断是否请求成功了，await往下走必定是真实的接口给的obj.data数据，有问题就会出现在API接口的catch代码块内
-  if (success) {
-    Message({
-      showClose: true,
-      message: message,
-      type: 'success'
-    })
-    return Promise.resolve(data)
-  } else {
-    Message.error(message)
-    return Promise.reject(new Error(message)) // 返回一个被拒绝的Promise，中止Promise链的执行
+  if (store.getters.token) {
+    // 只有登录后，有token了，才有必要判断token是否超时
+    // 超时就做清理工作，返回登录页
+    if (isTimeout(timeout)) {
+      store.dispatch('user/logoutUser')
+      router.push('/login')
+      return Promise.reject(new Error(`当前登录已经超过${(timeout / 1000 / 60 / 60).toFixed(2)}小时，请重新登录`))
+    }
+    config.headers.Authorization = `Bearer ${store.getters.token}`
+    return config
   }
+  return config
 }, function(error) {
   console.log(error)
   Message({
@@ -37,6 +33,49 @@ request.interceptors.response.use(function(value) {
   })
   return Promise.reject(error)
 })
+request.interceptors.response.use(function(value) {
+  console.log('axios响应拦截器获得原始数据如下：')
+  console.log(value)
+  // 响应拦截器
+  const { success, message, data } = value.data // 这样解构以后，API接口就无需判断是否请求成功了，await往下走必定是真实的接口给的obj.data数据，有问题就会出现在API接口的catch代码块内
+  if (success) {
+    // Message({
+    //   showClose: true,
+    //   message: message,
+    //   type: 'success'
+    // })
+    return Promise.resolve(data)
+  } else {
+    Message.error(message)
+    return Promise.reject(new Error(message)) // 返回一个被拒绝的Promise，中止Promise链的执行
+  }
+}, function(error) {
+  console.log(error)
+
+  // 如果后端返回的code为10002，则表示后端认为用户token已超时
+  // 超时就做清理工作，返回登录页
+  if (error.response && error.response.data && error.response.data.code === 10002) {
+    store.dispatch('user/logoutUser')
+    router.push('/login')
+    return Promise.reject(new Error('当前登录已经超时，请重新登录'))
+  } else {
+    // 其它错误
+    Message({
+      showClose: true,
+      message: error.message,
+      type: 'error'
+    })
+    return Promise.reject(error)
+  }
+})
+
+// token是否超时
+function isTimeout(timeout) {
+  const currentTimestamp = Date.now()
+  const preTimestamp = +getTimestamp()
+  return currentTimestamp - preTimestamp >= timeout
+}
+
 export default request
 
 /*

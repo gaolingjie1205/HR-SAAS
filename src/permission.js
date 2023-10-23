@@ -78,7 +78,7 @@ import 'nprogress/nprogress.css'
 const whiteList = ['/login', '/404']
 
 // 全局前置导航守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   nProgress.start()
   if (store.getters.token) {
     if (to.path === '/login') {
@@ -86,6 +86,10 @@ router.beforeEach((to, from, next) => {
       next('/')
     } else {
       // 已登录，有权访问任何页面
+      // 首先看获取了用户基本资料没有，必须先获取，后续页面才能正常渲染
+      if (!store.getters?.userId) {
+        await store.dispatch('user/getUserInfos')
+      }
       next()
     }
   } else {

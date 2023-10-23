@@ -16,11 +16,18 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-// 引入SVG图标组件
+// 引入本项目的所有SVG文件
 import '@/icons'
 
 // 引入Vue导航守卫，做权限控制
 import '@/permission'
+
+// 引入全局Vue自定义指令
+import * as directives from '@/directives'
+Object.keys(directives).forEach(key => {
+  Vue.directive(key, directives[key])
+})
+
 
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })

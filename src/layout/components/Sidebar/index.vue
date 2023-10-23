@@ -31,8 +31,9 @@ export default {
       'sidebar'
     ]),
     routes() {
+      // 根据路由规则数组，加载侧边栏导航项
       return this.$router.options.routes
-    },
+    }, 
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -43,12 +44,15 @@ export default {
       return path
     },
     showLogo() {
+      // 是否在菜单内展示项目LOGO
       return this.$store.state.settings.sidebarLogo
     },
     variables() {
+      // 将scss提供的变量以JS对象的形式提供给本组件
       return variables
     },
     isCollapse() {
+      // sidebar目前是否折叠
       return !this.sidebar.opened
     }
   }

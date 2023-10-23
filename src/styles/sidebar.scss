@@ -1,3 +1,5 @@
+// sidebar.scss 侧边导航栏样式
+
 #app {
 
   .main-container {
@@ -7,18 +9,20 @@
     position: relative;
   }
 
+  // 侧边栏组件
   .sidebar-container {
-    transition: width 0.28s;
-    width: $sideBarWidth !important;
-    background-color: $menuBg;
-    height: 100%;
     position: fixed;
-    font-size: 0px;
     top: 0;
     bottom: 0;
     left: 0;
     z-index: 1001;
     overflow: hidden;
+    width: $sideBarWidth !important;
+    height: 100%;
+    background-color: $menuBg;
+    background-image: linear-gradient(to bottom, #3d6df8, #5b8cff);
+    font-size: 0px;
+    transition: width 0.28s;
 
     // reset element-ui css
     .horizontal-collapse-transition {
@@ -27,6 +31,7 @@
 
     .scrollbar-wrapper {
       overflow-x: hidden !important;
+      background: url('~@/assets/common/leftnavBg.png') no-repeat 0 100%;
     }
 
     .el-scrollbar__bar.is-vertical {

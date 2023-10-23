@@ -1,3 +1,5 @@
+// variables.scss 存放本项目的所有SCSS变量
+
 // base color
 $blue: #409EFF;
 $light-blue:#3A71A8;
@@ -11,17 +13,20 @@ $panGreen: #30B08F;
 $green1: #44b549;
 
 // sidebar
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
+$menuText:#fff;
+// $menuActiveText:#409EFF;
+$menuActiveText: orange;
 $subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
 
 // $menuBg:#304156;
 // $menuHover:#263445;
 $menuBg: transparent;
-$menuHover:#ffffff;
+$menuHover:rgba(255, 255, 255, 0.3);
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+// $subMenuBg:#1f2d3d;
+// $subMenuHover:#001528;
+$subMenuBg:transparent;
+$subMenuHover:rgba(255, 255, 255, 0.3);
 
 $sideBarWidth: 210px;
 
